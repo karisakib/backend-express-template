@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fs = require("fs")
 const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const createError = require("http-errors");
@@ -8,8 +9,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const YAML = require("yaml");
 const mongoose = require("mongoose");
 
 // Utility imports
@@ -28,18 +29,11 @@ const otpRouter = require("./routes/otp");
 const ApiKeyModel = require("./models/apiKeyModel");
 const UserModel = require("./models/userModel");
 
-// App configs
-const swaggerOptions = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Sample API Template",
-      version: "1.0.0",
-    },
-  },
-  apis: ["./routes/*.js"], // files containing annotations as above
-};
-const swaggerSpec = swaggerJsdoc(swaggerOptions);
+// Swagger docs import
+// const swaggerDocument = require("./swagger.json")
+const file  = fs.readFileSync('./swagger.yml', 'utf8')
+const swaggerDocument = YAML.parse(file)
+
 
 // Database configs
 mongoose
@@ -67,11 +61,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routers
-// app.use("/", indexRouter);
+app.use("/", indexRouter);
 app.use("/", staticRouter);
 app.use("/", redirectRouter);
 app.use("/", templateRouter);
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/users", usersRouter);
 app.use("/otp", otpRouter)
 

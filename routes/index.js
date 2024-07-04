@@ -1,17 +1,8 @@
 const express = require("express");
 const path = require("path");
+const UserModel = require("../models/userModel");
 const router = express.Router();
 
-/**
- * @swagger
- * /users/all:
- *   get:
- *     summary: Returns all users from database
- *     description: Returns all users
- *     responses:
- *       200:
- *         description: Returns all users from the database.
- */
 router.post("/signup", async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -25,8 +16,7 @@ router.post("/signup", async (req, res) => {
       );
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log({ email, password, hashedPassword });
-    const newUserData = new UserModel({ email, hashedPassword });
+    const newUserData = new UserModel({ firstName, lastName, email, hashedPassword });
     const savedUserData = await newUserData.save();
     console.log(savedUserData);
     res.status(201).json({
@@ -38,23 +28,30 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: User login
- *     requestBody:
- *       description: Optional description in *Markdown*
- *       required: true
- *       content:
- *         application/json:
- *     description: User logs into the application.
- *     responses:
- *       200:
- *         description: Returns all users from the database.
- *       400:
- *         description: Invalid credentials?
- */
+router.post("/reset", async (req, res) => {
+ try {
+   let { email } = req.body;
+   email = email.trim();
+   if (!email) {
+     throw Error(
+       "Email is a required field."
+     );
+   }
+   const user = UserModel.find({ filter : {"email": email}})
+   if (!user) {
+    throw Error(`User with email ${email} could not be found.`)
+   }
+   console.log(user);
+   res.status(201).json({
+     message: "User Found",
+     // data: user,
+   });
+ } catch (err) {
+   res.status(400).json({ error: err.message });
+ }
+});
+
+
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
