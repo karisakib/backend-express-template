@@ -1,0 +1,17 @@
+# Express + TypeScript + TailwindCSS + EJS + MongoDB Project Template
+
+### Features
+- User authentication
+- Swagger docs
+- TypeScript support
+- MongoDB database config
+- PostgreSQL database config
+- MySQL database config
+- Static HTML serving
+- EJS template views
+- Static asset serving
+- Production logging
+- File upload
+- File compression
+- Helmet.js security options
+- Email sending integration

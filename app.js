@@ -7,21 +7,28 @@ const path = require("path");
 const cors = require("cors");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const morgan = require("morgan");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const mongoose = require("mongoose");
 
+// Utility imports
+const config = require("./utils/config");
+
 // Router imports
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const staticRouter = require("./routes/staticFiles");
+const redirectRouter = require("./routes/redirect");
+const templateRouter = require("./routes/templates");
+const otpRouter = require("./routes/otp");
+
 
 // Mongo imports
 const ApiKeyModel = require("./models/apiKeyModel");
 const UserModel = require("./models/userModel");
 
 // App configs
-const config = require("./utils/config");
 const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
@@ -44,7 +51,7 @@ mongoose
 const app = express();
 
 // View engine
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
 // Middleware
 app.use(
@@ -53,81 +60,24 @@ app.use(
   })
 );
 app.use(cors());
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-// Custom middleware to intercept all requests
-// app.use((req, res, next) => {
-//  // Modify the response body or perform any other actions
-//  console.log(`Intercepted request: ${req.method} ${req.url}`);
-//  next();
-// });
-
 // Routers
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // app.use("/", indexRouter);
+app.use("/", staticRouter);
+app.use("/", redirectRouter);
+app.use("/", templateRouter);
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", usersRouter);
-
-// Static html routes
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "pages/index.html"));
-});
-
-app.get("/signup", (req, res) => {
-  res.sendFile(path.join(__dirname, "pages/sign-up.html"));
-});
-
-app.get("/reset", (req, res) => {
-  res.sendFile(path.join(__dirname, "pages/pwd-reset.html"));
-});
-
-app.get("/apikey", (req, res) => {
-  res.sendFile(path.join(__dirname, "pages/api-key.html"));
-});
-
-// Template routes
-app.get('/about', (req, res) => {
- res.render('pages/about');
-});
-
-// Testing redirects
-app.get("/from", (req, res) => {
-  setTimeout(() => {
-    res.redirect("to");
-  }, 1000);
-});
-
-app.get("/to", (req, res) => {
-  res.status(200).json({
-    message: "redirect working",
-  });
-});
-
-// User Accounts
-app.get("/db", async (req, res) => {
-  try {
-    const documents = await ApiKeyModel.find({});
-    res.status(201).json(documents);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Testing local DB
-// app.get("/db", async (req, res) => {
-//   try {
-//     const documents = await ApiKeyModel.find({});
-//     res.status(201).json(documents);
-//   } catch (err) {
-//     res.status(400).json({ error: err.message });
-//   }
-// });
+app.use("/otp", otpRouter)
 
 app.post("/keygen", async (req, res) => {
   const { email } = req.body;
+  email = email.trim();
   const generatedApiKey = crypto.randomBytes(16).toString("hex");
   console.log(generatedApiKey);
   try {
@@ -144,44 +94,51 @@ app.post("/keygen", async (req, res) => {
 });
 
 // Testing user sign up
-app.post("/signup", async (req, res) => {
-  const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  console.log({ email, password, hashedPassword });
-  try {
-    const newUserData = new UserModel({ email, hashedPassword });
-    const savedUserData = await newUserData.save();
-    console.log(savedUserData);
-    res.status(201).json({
-      message: "Here is your new api key below",
-      data: savedUserData,
-    });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+// app.post("/signup", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     email = email.trim();
+//     password = password.trim();
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     console.log({ email, password, hashedPassword });
+//     const newUserData = new UserModel({ email, hashedPassword });
+//     const savedUserData = await newUserData.save();
+//     console.log(savedUserData);
+//     res.status(201).json({
+//       message: "User registered",
+//       email
+//     });
+//   } catch (err) {
+//     res.status(400).json({ error: err.message });
+//   }
+// });
 
 // Testing user login
-app.post("/login", async (req, res) => {
-  // const { email, password } = req.body;
-  try {
-    const userCredentials = await UserModel.findOne({
-      email: req.body.email,
-    });
-    const isValid = await bcrypt.compare(req.body.password, userCredentials.hashedPassword);
-    if (isValid) {
-      res.status(200).json({
-        message: "User authenticated.",
-      });
-    } else {
-      res.status(401).json({
-        message: "User authentication failed.",
-      });
-    }
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+// app.post("/login", async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+//     email = email.trim();
+//     password = password.trim();
+//     const userCredentials = await UserModel.findOne({
+//       email: req.body.email,
+//     });
+//     const isValid = await bcrypt.compare(
+//       req.body.password,
+//       userCredentials.hashedPassword
+//     );
+//     if (isValid) {
+//       res.status(200).json({
+//         message: "User authenticated.",
+//       });
+//     } else {
+//       res.status(401).json({
+//         message: "User authentication failed.",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(400).json({ error: err.message });
+//   }
+// });
 
 // Testing X-API-KEY header
 app.get("/db", (req, res) => {
@@ -197,6 +154,11 @@ app.get("/db", (req, res) => {
       },
     });
   }
+});
+
+// The infamous 404 route - ALWAYS Keep this as the last route
+app.get("*", (req, res) => {
+  res.status(404).send("Are you looking for something?");
 });
 
 // Express App

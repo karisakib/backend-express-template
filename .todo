@@ -1,0 +1,6 @@
+- Convert project to ESM syntax
+- Convert project to TypeScript
+- Custom colored logger
+- Password hash utility function
+- Static assets route (images, etc.)
+- server-side form validation
