@@ -1,5 +1,7 @@
 # Express + TypeScript + TailwindCSS + EJS + MongoDB Project Template
 
+![Template Header](./public/images/template-header.png)
+
 ### Features
 - User authentication
 - Swagger docs
