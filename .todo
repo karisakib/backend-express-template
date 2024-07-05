@@ -4,3 +4,10 @@
 - Password hash utility function
 - Static assets route (images, etc.)
 - server-side form validation
+- Views testing
+- API testing
+- Redis support
+- SQLite support
+- Playwright API tests
+- Playwright Views tests
+- Playwright test reports

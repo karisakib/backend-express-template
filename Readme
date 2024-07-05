@@ -15,3 +15,15 @@
 - File compression
 - Helmet.js security options
 - Email sending integration
+
+### Todo
+- Convert project to ESM syntax
+- Convert project to TypeScript
+- Custom colored logger
+- Password hash utility function
+- Static assets route (images, etc.)
+- server-side form validation
+- Views testing
+- API testing
+- Redis support
+- SQLite support
