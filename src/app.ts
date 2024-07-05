@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 require("dotenv").config();
 const fs = require("fs")
 const crypto = require("crypto");
@@ -74,7 +76,7 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/users", usersRouter);
 app.use("/otp", otpRouter)
 
-app.post("/keygen", async (req, res) => {
+app.post("/keygen", async (req: Request, res: Response) => {
   let { email } = req.body;
   email = email.trim();
   const generatedApiKey = crypto.randomBytes(16).toString("hex");

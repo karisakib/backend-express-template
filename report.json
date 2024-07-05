@@ -3,7 +3,7 @@
     "configFile": "/Users/kais/Desktop/express-mongo-ts-template/playwright.config.js",
     "rootDir": "/Users/kais/Desktop/express-mongo-ts-template/tests",
     "forbidOnly": false,
-    "fullyParallel": false,
+    "fullyParallel": true,
     "globalSetup": null,
     "globalTeardown": null,
     "globalTimeout": 0,
@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 2
+      "actualWorkers": 3
     },
     "preserveOutput": "always",
     "reporter": [
@@ -108,7 +108,7 @@
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2024-07-05T00:09:45.788Z",
+                      "startTime": "2024-07-05T01:33:04.817Z",
                       "attachments": []
                     }
                   ],
@@ -152,12 +152,12 @@
                     {
                       "workerIndex": 1,
                       "status": "passed",
-                      "duration": 40,
+                      "duration": 41,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2024-07-05T00:09:45.788Z",
+                      "startTime": "2024-07-05T01:33:04.817Z",
                       "attachments": []
                     }
                   ],
@@ -172,13 +172,62 @@
           ]
         }
       ]
+    },
+    {
+      "title": "views/views.spec.js",
+      "file": "views/views.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Views Tests",
+          "file": "views/views.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "GET /docs should return Swagger UI",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "views",
+                  "projectName": "views",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "status": "passed",
+                      "duration": 29,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2024-07-05T01:33:04.817Z",
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "68903ea7ecb4fc0aec6b-a82407ea3a4368484563",
+              "file": "views/views.spec.js",
+              "line": 5,
+              "column": 3
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2024-07-05T00:09:45.597Z",
-    "duration": 245.963,
-    "expected": 2,
+    "startTime": "2024-07-05T01:33:04.610Z",
+    "duration": 260.278,
+    "expected": 3,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

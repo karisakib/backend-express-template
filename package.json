@@ -8,6 +8,7 @@
     "test": "playwright test",
     "test:views": "playwright test --project=views",
     "test:api": "playwright test --project=api",
+    "report": "playwright show-report reports",
     "build": "tsc --build",
     "start": "node dist/app.js"
   },
@@ -57,6 +58,7 @@
     "@playwright/test": "^1.45.1",
     "nodemon": "^3.1.0",
     "pino-pretty": "^11.0.0",
+    "start-server-and-test": "^2.0.4",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   }

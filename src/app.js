@@ -1,5 +1,5 @@
 require("dotenv").config();
-const fs = require("fs")
+const fs = require("fs");
 const crypto = require("crypto");
 // import crypto from "crypto";
 const bcrypt = require("bcrypt");
@@ -28,15 +28,14 @@ const templateRouter = require("./routes/templates.js");
 const otpRouter = require("./routes/otp.js");
 const apiRouter = require("./api/api.js");
 
-
 // Mongo imports
 const ApiKeyModel = require("./models/apiKeyModel.js");
 const UserModel = require("./models/userModel.js");
 
 // Swagger docs import
 // const swaggerDocument = require("./swagger.json")
-const file  = fs.readFileSync('./swagger.yml', 'utf8')
-const swaggerDocument = YAML.parse(file)
+const file = fs.readFileSync("./swagger.yml", "utf8");
+const swaggerDocument = YAML.parse(file);
 
 // Database configs
 mongoose
@@ -48,7 +47,7 @@ mongoose
 const app = express();
 
 // Set the views directory
-app.set('views', path.join(__dirname, 'views'));
+app.set("views", path.join(__dirname, "views"));
 
 // View engine
 app.set("view engine", "ejs");
@@ -64,7 +63,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Routers
 app.use("/", indexRouter);
@@ -73,8 +72,8 @@ app.use("/", redirectRouter);
 app.use("/", templateRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/users", usersRouter);
-app.use("/otp", otpRouter)
-app.use('/api', apiRouter);
+app.use("/otp", otpRouter);
+app.use("/api", apiRouter);
 
 app.post("/keygen", async (req, res) => {
   let { email } = req.body;
