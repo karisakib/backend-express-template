@@ -1,12 +1,12 @@
 const { defineConfig, devices } = require("@playwright/test");
 
 module.exports = defineConfig({
-  testDir: "./tests",
-  outputDir: "./reports",
+  testDir: "./__tests__",
+  outputDir: "./__reports__",
   reporter: [
     ["list"],
-    ["json", { outputFile: "report.json" }],
-    ["html", { outputFolder: 'reports', outputFile: "report.html" }],
+    ["json", { outputFolder: '__reports__', outputFile: "report.json" }],
+    ["html", { outputFolder: '__reports__', outputFile: "report.html" }],
   ],
   fullyParallel: true,
   projects: [

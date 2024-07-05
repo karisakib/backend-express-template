@@ -2,26 +2,108 @@ openapi: 3.0.0
 info:
   title: Express API Template
   description: This template is built with Express, TypeScript, MongoDB, EJS, and a whole lot more.
-  version: 0.0.1
+  version: 1.0.0
 
+servers:
+  # - url: http://api.example.com/api/v1
+  #   description: Main (production) server
+  # - url: http://stage-api.example.com
+  #   description: Internal staging server for testing
+  - url: http://localhost:3000/api/v1
+    description: Internal development server for builds
 
-# servers:
-#   - url: http://api.example.com/v1
-#     description: Optional server description, e.g. Main (production) server
-#   - url: http://staging-api.example.com
-#     description: Optional server description, e.g. Internal staging server for testing
+tags:
+  - name: Auth
+    description: Operations related to authentication
+  - name: Users
+    description: Operations related to users
+  - name: Email
+    description: Operations related to emails
 
 paths:
   /users/all:
     get:
-      summary: Returns a list of users.
-      description:
+      tags: Users
+      summary: Find all users
+      description: Returns a JSON of all users
+      operationId: getAllUsers
       responses:
-        '200':
-          description: A JSON array of user names
+        "200":
+          description: Users fetched
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
-                items: 
-                  type: string
+                items:
+                  $ref: '#/components/schemas/User'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+
+  /users/create:
+    post:
+      # tags: Users
+      summary: Creates user
+      description: Creates a user in the database and returns user info
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+    get:
+      # tags: Users
+      summary: Finds user by id
+      description: Finds a  user by their user id
+      operationId: getUser
+      responses:
+        "200":
+          description: Users found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad Request
+        "404":
+          description: Not Found
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: First name
+          default: John
+        lastName:
+          type: string
+          description: Last name
+          default: Doe
+        email:
+          type: string
+          description: Email    
+          default: johndoe@email.com            
+        password:
+          type: string
+          description: Password
+          default: password
+        required:
+          - firstName
+          - lastName
+          - email
+          - password
