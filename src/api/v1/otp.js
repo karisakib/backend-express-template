@@ -1,26 +1,35 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-// const ApiKeyModel = require("./models/apiKeyModel");
-const OTPModel = require("../../models/otpModel");
+const sendOTP = require("../../handlers/otpHandler");
 
 // Path: /api/v1/otp/
-router.post("/otp", async (req, res) => {
+router.post("/", async (req, res) => {
+  try {
+   let { email, subject, message, duration } = req.body;
+
+   const createdOTP = await sendOTP({
+    email,
+    subject,
+    message,
+    duration
+   })
+
+   res.status(201).json(createdOTP);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+router.get("/", async (req, res) => {
  try {
-   const documents = await OTPModel.find({});
-   res.status(201).json(documents);
- } catch (err) {
-   res.status(400).json({ error: err.message });
+  res.status(200).json({
+   message: "v1 - OTP route"
+});
+ } catch (error) {
+   res.status(400).json({ error: error.message });
  }
 });
 
-router.get("/:id", async (req, res) => {
- try {
-  const id = req.params.id;
-   res.status(200).json({"params":id});
- } catch (err) {
-   res.status(400).json({ error: err.message });
- }
-});
 
 module.exports = router;

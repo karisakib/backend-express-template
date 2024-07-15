@@ -11,3 +11,23 @@
 - Playwright API tests
 - Playwright Views tests
 - Playwright test reports
+- AWS deployment config
+- GCP deployment config
+- Azure deployment config
+- Railway deployment config
+- Vercel deployment config
+- DigitalOcean deployment config
+- Netlify deployment config
+- Hostinger deployment config
+- Heroku deployment config
+- Bluehost deployment config
+- Cloudflare deployment config
+- Nginx reverse proxy
+- Pm2
+- CentOS
+- Docker
+- GraphQL
+- GitHub Actions
+- CircleCI
+- TravisCI
+- Role Based Access Control

@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema(
   {
+    // Defaulted userId: Date.now() + UUIDv4 striped of dashes, but dash between date and uuid.
+    //  userId: {
+    //   type: String,
+    //   required: true,
+    // },
     firstName: {
       type: String,
       required: true,
@@ -21,10 +26,15 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    // This token is a JWT.
+    token: {
+      type: String,
+      default: ''
+      // required: true,
+    }
   },
-  {
-    collection: "users",
-  },
+  { timestamps: true },
+  { collection: "users" },
   { versionKey: false }
 );
 

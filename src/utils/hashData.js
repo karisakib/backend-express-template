@@ -17,3 +17,8 @@ const verifyHashedData = async (unhashed, hashed) => {
    console.log(error);
  }
 };
+
+module.exports = {
+ hashData,
+ verifyHashedData
+}

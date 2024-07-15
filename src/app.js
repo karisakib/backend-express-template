@@ -22,6 +22,7 @@ require("./db/mongoDB.js")
 // Router imports
 const redirectRouter = require("./routes/redirectRoutes.js");
 const viewRouter = require("./routes/viewRoutes.js");
+const uploadRouter = require("./routes/uploadRoutes.js");
 const apiRouter = require("./api/api.js");
 
 // Mongo imports
@@ -64,6 +65,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 // Routers
 app.use("/", redirectRouter);
 app.use("/", viewRouter);
+app.use("/", uploadRouter);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api", apiRouter);
 

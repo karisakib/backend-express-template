@@ -52,9 +52,15 @@ router.post("/keygen", async (req: Request, res: Response) => {
 // Testing user login
 router.post("/login", async (req: Request, res: Response) => {
  try {
+  // Get req.body data from client
   let { email, password } = req.body;
   email = email.trim();
   password = password.trim();
+
+  if (!email && !password) {
+   throw Error("Email and password required.")
+  }
+
   const userCredentials = await UserModel.findOne({
    email: req.body.email,
   });

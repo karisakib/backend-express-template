@@ -11,8 +11,4 @@ apiRouter.use('/v1/auth', authRoutes);
 apiRouter.use('/v1/otp', otpRoutes);
 apiRouter.use('/v1/users', userRoutes);
 
-// Prefix routes with /v2 - Basic Test Routes
-apiRouter.use('/v2/auth', authRoutes);
-apiRouter.use('/v2/users', userRoutes);
-
 module.exports = apiRouter;

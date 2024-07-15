@@ -15,9 +15,8 @@ const ApiKeySchema = new Schema(
       unique: true,
     },
   },
-  {
-    collection: "apikeys",
-  },
+  { timestamps: true },
+  { collection: "apikeys" },
   { versionKey: false }
 );
 

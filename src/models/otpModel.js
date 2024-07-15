@@ -11,14 +11,16 @@ const OTPSchema = new Schema(
     },
     otp: {
       type: String,
-      createdAt: Date,
-      expiresAt: Date
     },
+    expireAt: {
+     type: Date,
+     default: Date.now,
+     expires: 60*5, // Expires in 5 minutes
+   },
   },
-  {
-    collection: "otp",
-  },
-  { versionKey: false }
+  { timestamps: true },
+  { collection: "otp" },
+  { versionKey: false },
 );
 
 const OTPModel = mongoose.model("OTP", OTPSchema);
