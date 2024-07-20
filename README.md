@@ -13,7 +13,6 @@
 
 ##### API Types
 - [ ] REST
-- [ ] GraphQL
 
 ##### Authentication
 - [ ] Username password authentication

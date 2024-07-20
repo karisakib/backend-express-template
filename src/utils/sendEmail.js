@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 
 const { EMAIL_AUTH_EMAIL, EMAIL_AUTH_PASSWORD } = process.env;
 
+// https://www.suprsend.com/post/how-to-send-transactional-emails-with-brevo-formerly-sendinblue-api-in-node-js-w-codes-and-examples
+
 let transporter = nodemailer.createTransport({
   name: "smtp-relay.brevo.com",
   host: "smtp-relay.brevo.com",

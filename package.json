@@ -13,6 +13,7 @@
     "start": "node dist/app.js"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^2.2.0",
     "@supabase/supabase-js": "^2.44.2",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
