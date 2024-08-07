@@ -1,4 +1,4 @@
-# Express + TypeScript + TailwindCSS + EJS + MongoDB Project Template
+# Production Grade Express + TypeScript Template
 
 ![Template Header](./public/images/template-header.png)
 

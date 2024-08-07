@@ -17,7 +17,7 @@ const YAML = require("yaml");
 const config = require("./config/config");
 
 // Database imports
-require("./db/mongoDB.js")
+require("./config/mongoDB.js")
 
 // Router imports
 const redirectRouter = require("./routes/redirectRoutes.js");
